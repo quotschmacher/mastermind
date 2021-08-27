@@ -8,10 +8,12 @@ CRGB leds[LED_COUNT];
 
 void setup()
 {
+    Serial.begin(115200);
     // put your setup code here, to run once:
     delay(3000);
     FastLED.addLeds<SK6812, LED_PIN, RGB>(leds, LED_COUNT);
     FastLED.setBrightness(50);
+    Serial.println("lets get the party started");
 }
 
 uint8_t actual_led = 0;
