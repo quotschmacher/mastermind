@@ -35,6 +35,6 @@ void loop()
         actual_led = 0;
     }
     FastLED.show();
-    FastLED.delay(500);
+    FastLED.delay(1000);
     //EVERY_N_MILLISECONDS(50) { fill_rainbow(leds, LED_COUNT); }
 }
