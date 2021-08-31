@@ -1,8 +1,9 @@
 #include <Arduino.h>
 #include <FastLED.h>
 
-#define LED_PIN     2
+#define LED_PIN     23
 #define LED_COUNT   36
+#define LED_ON      18
 
 CRGB leds[LED_COUNT];
 
@@ -11,9 +12,12 @@ void setup()
     Serial.begin(115200);
     // put your setup code here, to run once:
     delay(3000);
-    FastLED.addLeds<SK6812, LED_PIN, RGB>(leds, LED_COUNT);
+    FastLED.addLeds<WS2812B, LED_PIN, GRB>(leds, LED_COUNT);
     FastLED.setBrightness(50);
     Serial.println("lets get the party started");
+    pinMode(LED_ON,OUTPUT);
+    digitalWrite(LED_ON,HIGH);
+
 }
 
 uint8_t actual_led = 0;
@@ -28,13 +32,13 @@ void loop()
         leds[i] = CRGB::Black;
     }
     // eine LED auf blau
-    leds[actual_led] = CRGB::Blue;
+    leds[actual_led] = CRGB::Green;
     // dann eine LED weitergehen, ggf zum Anfang
     if (++actual_led >= LED_COUNT)
     {
         actual_led = 0;
     }
     FastLED.show();
-    FastLED.delay(1000);
+    FastLED.delay(250);
     //EVERY_N_MILLISECONDS(50) { fill_rainbow(leds, LED_COUNT); }
 }
