@@ -60,8 +60,15 @@ void iterate_colors_loop()
     
 while (1)
     {
-        leds[0] = ColorChooser::getNextColor(leds[0]);
+       for (uint8_t i = 0; i < LED_COUNT; i++)
+       {
+        leds[i] = ColorChooser::getNextColor(leds[i]);
         FastLED.show();
-        FastLED.delay(500);
+        FastLED.delay(20);           
+       }
+       
+       
+       
+
     }
 }
