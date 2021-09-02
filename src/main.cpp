@@ -5,6 +5,7 @@
 #define LED_PIN     23
 #define LED_COUNT   36
 #define LED_ON      18
+#define BRIGHTNESS  1
 
 CRGB leds[LED_COUNT];
 
@@ -17,7 +18,7 @@ void setup()
     // put your setup code here, to run once:
     delay(3000);
     FastLED.addLeds<WS2812B, LED_PIN, GRB>(leds, LED_COUNT);
-    FastLED.setBrightness(50);
+    FastLED.setBrightness(BRIGHTNESS);
     Serial.println("lets get the party started");
     pinMode(LED_ON,OUTPUT);
     digitalWrite(LED_ON,HIGH);
@@ -66,9 +67,5 @@ while (1)
         FastLED.show();
         FastLED.delay(20);           
        }
-       
-       
-       
-
     }
 }
