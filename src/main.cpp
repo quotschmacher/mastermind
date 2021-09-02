@@ -5,7 +5,12 @@
 #define LED_PIN     23
 #define LED_COUNT   36
 #define LED_ON      18
+<<<<<<< Updated upstream
 //test // noch eintest
+=======
+
+
+>>>>>>> Stashed changes
 CRGB leds[LED_COUNT];
 
 // Funktionsprototypen
@@ -48,6 +53,7 @@ void loop()
     FastLED.delay(250);
     //EVERY_N_MILLISECONDS(50) { fill_rainbow(leds, LED_COUNT); }
 }
+
 
 void iterate_colors_loop()
 {
