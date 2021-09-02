@@ -15,12 +15,12 @@ CRGB ColorChooser::getNextColor(CRGB actColor)
             if (i < (USED_COLORS - 1))
             {
                 // nein - naechste Farbe zurueckgeben
-                return colors[i + 1];
+                return colors[i+1];
             }
             else
             {
                 // ja - erste Farbe zurueckgeben
-                return colors[i];
+                return colors[0];
             }
         }
     }
