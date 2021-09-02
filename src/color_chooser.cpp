@@ -20,7 +20,7 @@ CRGB ColorChooser::getNextColor(CRGB actColor)
             else
             {
                 // ja - erste Farbe zurueckgeben
-                return colors[i];
+                return colors[0];
             }
         }
     }
