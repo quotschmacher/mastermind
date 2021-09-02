@@ -5,12 +5,7 @@
 #define LED_PIN     23
 #define LED_COUNT   36
 #define LED_ON      18
-<<<<<<< Updated upstream
-//test // noch eintest
-=======
 
-
->>>>>>> Stashed changes
 CRGB leds[LED_COUNT];
 
 // Funktionsprototypen
