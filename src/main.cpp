@@ -57,7 +57,8 @@ void iterate_colors_loop()
     {
         leds[i] = CRGB::Black;
     }
-    while (1)
+    
+while (1)
     {
         leds[0] = ColorChooser::getNextColor(leds[0]);
         FastLED.show();
