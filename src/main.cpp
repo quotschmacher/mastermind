@@ -1,6 +1,8 @@
 #include <Arduino.h>
 #include <FastLED.h>
 #include <color_chooser.hpp>
+#include <settings.h>
+#include <WiFi.h>
 
 #define LED_PIN     23
 #define LED_COUNT   36
@@ -14,7 +16,10 @@ void iterate_colors_loop();
 
 void setup()
 {
+    //randomSeed(analogRead(0));
+    uint32_t rnd_num = random(USED_COLORS);
     Serial.begin(115200);
+    Serial.println(rnd_num);
     // put your setup code here, to run once:
     delay(3000);
     FastLED.addLeds<WS2812B, LED_PIN, GRB>(leds, LED_COUNT);
@@ -22,6 +27,33 @@ void setup()
     Serial.println("lets get the party started");
     pinMode(LED_ON,OUTPUT);
     digitalWrite(LED_ON,HIGH);
+
+    
+    WiFi.disconnect();
+    WiFi.setHostname(HOSTNAME);
+    WiFi.mode(WIFI_STA);
+    delay(100);
+
+    Serial.println("Connecting to Wifi");
+
+    
+    WiFi.begin(WLAN_SSID, WLAN_PASS);
+    int cnt = 0;
+    while (WiFi.status() != WL_CONNECTED) {
+        Serial.print(".");
+        cnt++;
+        if (cnt > 10)
+        {
+            WiFi.begin(WLAN_SSID, WLAN_PASS);
+            cnt = 0;
+        }
+        delay(500);
+    }
+    Serial.println("");
+    Serial.println("WiFi connected");
+    Serial.println("IP address: ");
+    IPAddress ip = WiFi.localIP();
+    Serial.println(ip);
 
 }
 
