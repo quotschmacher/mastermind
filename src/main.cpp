@@ -3,6 +3,7 @@
 #include <color_chooser.hpp>
 #include <settings.h>
 #include <WiFi.h>
+#include <ESP32Encoder.h>
 
 #define LED_PIN     23
 #define LED_COUNT   36
@@ -10,9 +11,12 @@
 #define BRIGHTNESS  1
 
 CRGB leds[LED_COUNT];
+ESP32Encoder encoder;
 
 // Funktionsprototypen
 void iterate_colors_loop();
+void init_rotary_encoders();
+
 
 void setup()
 {
@@ -54,7 +58,7 @@ void setup()
     Serial.println("IP address: ");
     IPAddress ip = WiFi.localIP();
     Serial.println(ip);
-
+    init_rotary_encoders();
 }
 
 uint8_t actual_led = 0;
@@ -66,7 +70,7 @@ void loop()
     // put your main code here, to run repeatedly:
     //fill_rainbow();
     // alle LEDS auf schwarz
-    for (int i = 0; i < LED_COUNT; i++)
+    for (int i = 1; i < LED_COUNT; i++)
     {
         leds[i] = CRGB::Black;
     }
@@ -77,8 +81,20 @@ void loop()
     {
         actual_led = 0;
     }
+
+    int64_t cnt = encoder.getCount();
+    if (cnt > 0)
+    {
+        leds[0] = ColorChooser::getNextColor(leds[0]);
+    }
+    else if (cnt < 0)
+    {
+        leds[0] = ColorChooser::getPreviousColor(leds[0]);
+    }
+
     FastLED.show();
     FastLED.delay(250);
+
     //EVERY_N_MILLISECONDS(50) { fill_rainbow(leds, LED_COUNT); }
 }
 
@@ -86,7 +102,7 @@ void loop()
 void iterate_colors_loop()
 {
     // alle LEDS auf schwarz
-    for (int i = 0; i < LED_COUNT; i++)
+    for (int i = 1; i < LED_COUNT; i++)
     {
         leds[i] = CRGB::Black;
     }
@@ -100,4 +116,14 @@ while (1)
         FastLED.delay(20);           
        }
     }
+}
+
+
+void init_rotary_encoders()
+{
+    // hardware-pullups
+	//ESP32Encoder::useInternalWeakPullResistors=DOWN;
+	// Enable the weak pull up resistors
+	//ESP32Encoder::useInternalWeakPullResistors=UP;
+    encoder.attachHalfQuad(14, 27);
 }
