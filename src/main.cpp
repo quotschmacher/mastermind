@@ -102,6 +102,7 @@ void loop()
     {
         leds[0] = ColorChooser::getPreviousColor(leds[0]);
     }
+    encoder.clearCount();
 
     switch_1.tick();
     switch_2.tick();
