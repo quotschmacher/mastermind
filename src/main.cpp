@@ -4,18 +4,26 @@
 #include <settings.h>
 #include <WiFi.h>
 #include <ESP32Encoder.h>
+#include <OneButton.h>
 
 #define LED_PIN     23
 #define LED_COUNT   36
 #define LED_ON      18
 #define BRIGHTNESS  1
 
+#define SWITCH1     12
+#define SWITCH2     39 // laut Datasheet - SENSOR_VN
+
 CRGB leds[LED_COUNT];
 ESP32Encoder encoder;
+OneButton switch_1(SWITCH1, true);
+OneButton switch_2(SWITCH2, true);
 
 // Funktionsprototypen
 void iterate_colors_loop();
 void init_rotary_encoders();
+void switch1_click();
+void switch2_click();
 
 
 void setup()
@@ -59,13 +67,16 @@ void setup()
     IPAddress ip = WiFi.localIP();
     Serial.println(ip);
     init_rotary_encoders();
+
+    switch_1.attachClick(switch1_click);
+    switch_2.attachClick(switch2_click);
 }
 
 uint8_t actual_led = 0;
 
 void loop()
 {
-    iterate_colors_loop();
+    //iterate_colors_loop();
 
     // put your main code here, to run repeatedly:
     //fill_rainbow();
@@ -91,6 +102,9 @@ void loop()
     {
         leds[0] = ColorChooser::getPreviousColor(leds[0]);
     }
+
+    switch_1.tick();
+    switch_2.tick();
 
     FastLED.show();
     FastLED.delay(250);
@@ -126,4 +140,15 @@ void init_rotary_encoders()
 	// Enable the weak pull up resistors
 	//ESP32Encoder::useInternalWeakPullResistors=UP;
     encoder.attachHalfQuad(14, 27);
+}
+
+
+void switch1_click()
+{
+    Serial.println("SW1 click");
+}
+
+void switch2_click()
+{
+    Serial.println("SW2 click");
 }
